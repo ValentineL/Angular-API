@@ -1,0 +1,24 @@
+.main-container {
+    margin: 30px;
+    /*margin: auto;*/
+    /*margin-top: 60px;*/
+    /*margin: 20px 0px 20px 0px;*/
+}
+
+.redBg {
+    background-color: red;
+}
+
+.custom-table-style {
+    width: 100%;
+}
+
+.custom-table-style td, .custom-table-style th {
+    color: white;
+    background-color: black;
+
+    border: solid;
+    border-color: red;
+
+    text-align: center;
+}
