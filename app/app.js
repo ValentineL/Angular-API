@@ -2,7 +2,7 @@ angular.module("angular-table-example").controller("gitHubCtrl", [
   "$scope", "$http", function ( $scope, $http )
   {
     $scope.repos = [];
-    $scope.url   = { type: "users", name: "" };
+    $scope.url   = { type: "", name: "" };
 
     $scope.config = {
       itemsPerPage: 5,
@@ -47,15 +47,9 @@ angular.module("angular-table-example").controller("filteredTableCtrl", [
   "$scope", "$filter", function ( $scope, $filter )
   {
 
-    console.log('here');
-
     $scope.list = $scope.$parent.personList;
 
     $scope.filteredList = $scope.list;
-
-    // $scope.getList = function() {
-    //   return $filter("filter")($scope.list, $scope.query);
-    // }
 
     $scope.del = function ( i )
     {
@@ -86,3 +80,4 @@ angular.module('formExample', [])
 
     $scope.reset();
   }]);
+

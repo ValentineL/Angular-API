@@ -24,35 +24,6 @@
     <div class="container">
         <h1>Repositories</h1>
         <br>
-
-        <!--<div class="dropdown col-lg-1 col-md-2">
-            <button ng-model="gitType" class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Select:
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" ng-model="url.type">
-                <li><a href="#" value="users">Users</a></li>
-                <li><a href="#" value="orgs">Organization</a></li>
-            </ul>
-        </div>-->
-
-
-        <!--<form class="form-inline" novalidate ng-submit="fetchRepos(url.type, url.name)">
-            <div class="form-group">
-                <div class="input-group">
-
-                    <input type="text"
-                           ng-model="url.name"
-                           class="form-control" placeholder="Enter username" autofocus/>
-                </div>
-            </div>
-            <input type="button"
-                   value="Get Repositories"
-                    ng-click="fetchRepos(url.type, url.name)"
-                    class="btn btn-primary" />
-        </form>-->
-
         <form class="form-inline" novalidate ng-submit="fetchRepos(url.type, url.name)">
             <div class="form-group">
                 <div class="input-group">
@@ -73,6 +44,9 @@
                                ng-click="fetchRepos(url.type, url.name)"
                                class="btn btn-primary" />
                     </div>
+                    <div class="col-lg-4 col-lg-offset-1">
+                        <label>Search: <input ng-model="searchText"></label>
+                    </div>
                 </div>
             </div>
         </form>
@@ -83,13 +57,13 @@
                        at-config="config">
                     <thead></thead>
                     <tbody>
-                    <tr>
-                        <td at-implicit at-sortable at-attribute="id" width="150"
-                            at-initial-sorting="asc"></td>
-                        <td at-implicit at-sortable at-attribute="name" width="250"></td>
-                        <td at-implicit at-sortable at-attribute="size"></td>
-                        <td at-implicit at-sortable at-attribute="updated_at"></td>
-                    </tr>
+                        <tr>
+                            <td at-implicit at-sortable at-attribute="id" width="150"
+                                at-initial-sorting="asc"></td>
+                            <td at-implicit at-sortable at-attribute="name" width="250"></td>
+                            <td at-implicit at-sortable at-attribute="size"></td>
+                            <td at-implicit at-sortable at-attribute="updated_at"></td>
+                        </tr>
                     </tbody>
                 </table>
                 <at-pagination at-list="repos" at-config="config"></at-pagination>
@@ -108,7 +82,7 @@
     $('.dropdown-toggle').dropdown();
 </script>
 
-<script src="app.js"></script>
+<script src="app/app.js"></script>
 
 <script type="text/javascript">
 
