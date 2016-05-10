@@ -4,88 +4,99 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
-    <meta name="Description"
-          content="angular html table sorting sortable pagination paging page ng-table angular-table bootstrap">
-
     <title>Repositories</title>
-    <script src="./node_modules/angular/angular.js"></script>
-    <script type="text/javascript" src="./bower_components/at-table/dist/angular-table.min.js"></script>
-    <script type="text/javascript" src="./angular-tabs.min.js"></script>
-    <script type="text/javascript" src="./examplesModule.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="./css/syntax.css">
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/styles.css">
 
 </head>
 <body>
-
-<div class="main-container" ng-app="angular-table-example" ng-controller="gitHubCtrl">
-    <div class="container">
-        <h1>Repositories</h1>
-        <br>
-        <form class="form-inline" novalidate ng-submit="fetchRepos(url.type, url.name)">
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="col-lg-2">
-                        <span class="input-group-btn">
-                        <select class="btn" ng-model="url.type">
-                          <option value="users">User</option>
-                          <option value="orgs">Organization</option>
-                        </select>
-                    </span>
+    <div class="main-container">
+        <div class="container">
+            <h1>Repositories</h1><br>
+            <div ng-app="angularTable" ng-controller="listdata">
+                <form class="form-inline" novalidate ng-submit="fetchRepos(url.type, url.name)">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="col-lg-2 col-md-2">
+                                <span class="input-group-btn">
+                                    <select class="btn" ng-model="url.type">
+                                      <option value="users">User</option>
+                                      <option value="orgs">Organization</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <input type="text" class="form-control" ng-model="url.name">
+                            </div>
+                            <div class="col-lg-1 col-md-1">
+                                <input type="button"
+                                       value="Get Repositories"
+                                       ng-click="fetchRepos(url.type, url.name)"
+                                       class="btn btn-primary" />
+                            </div>
+                            <br><br><br>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="col-lg-1 col-md-1">
+                                    <label>Search</label>
+                                </div>
+                                <div class="col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1">
+                                    <input type="text" ng-model="search" class="form-control" placeholder="Search">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <input type="text" class="form-control" ng-model="url.name">
-                    </div>
-                    <div class="col-lg-1">
-                        <input type="button"
-                               value="Get Repositories"
-                               ng-click="fetchRepos(url.type, url.name)"
-                               class="btn btn-primary" />
-                    </div>
-                    <div class="col-lg-4 col-lg-offset-1">
-                        <label>Search: <input ng-model="searchText"></label>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <br>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-striped" at-table at-paginated at-list="repos"
-                       at-config="config">
-                    <thead></thead>
-                    <tbody>
+                </form>
+                <br>
+                <div class="bs-component">
+                    <table class="table table-striped table-hover">
+                        <thead>
                         <tr>
-                            <td at-implicit at-sortable at-attribute="id" width="150"
-                                at-initial-sorting="asc"></td>
-                            <td at-implicit at-sortable at-attribute="name" width="250"></td>
-                            <td at-implicit at-sortable at-attribute="size"></td>
-                            <td at-implicit at-sortable at-attribute="updated_at"></td>
+                            <th ng-click="sort('id')">Id
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th ng-click="sort('name')">Name
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th ng-click="sort('size')">Size
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='size'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
+                            <th ng-click="sort('updated_at')">Updated at
+                                <span class="glyphicon sort-icon" ng-show="sortKey=='updated_at'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                            </th>
                         </tr>
-                    </tbody>
-                </table>
-                <at-pagination at-list="repos" at-config="config"></at-pagination>
+                        </thead>
+                        <tbody>
+                        <tr dir-paginate="repo in repos|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                            <td class="col-lg-2 col-md-2">{{repo.id}}</td>
+                            <td class="col-lg-3 col-md-3">{{repo.name}}</td>
+                            <td class="col-lg-3 col-md-3">{{repo.size}}</td>
+                            <td class="col-lg-4 col-md-4">{{repo.updated_at}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls
+                            max-size="5"
+                            direction-links="true"
+                            boundary-links="true" >
+                    </dir-pagination-controls>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="./node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="node_modules/angular-utils-pagination/dirPagination.js"></script>
 
 <script type="text/javascript">
     $('.dropdown-toggle').dropdown();
 </script>
 
 <script src="app/app.js"></script>
-
-<script type="text/javascript">
-
-</script>
 </html>
 

@@ -1,83 +1,26 @@
-angular.module("angular-table-example").controller("gitHubCtrl", [
-  "$scope", "$http", function ( $scope, $http )
-  {
-    $scope.repos = [];
-    $scope.url   = { type: "", name: "" };
+var app = angular.module('angularTable', ['angularUtils.directives.dirPagination']);
 
-    $scope.config = {
-      itemsPerPage: 5,
-      fillLastPage: true
-    }
+app.controller('listdata',["$scope", "$http",function($scope, $http){
+  $scope.repos = []; //declare an empty array
+  $scope.url   = { type: "users", name: "" };
 
-//    $scope.$watch('search', function ()
-//    {
-////      $scope.fetchRepos();
-//    });
-
-    $scope.test = function(){
-      console.log('%cIt works', 'color:blue');
-    }
-
-    $scope.myFunction = function() {
-      $scope.count++;
-    }
-
-    $scope.fetchRepos = function ( type, name )
-    {
-      console.log('%cperforming API call', 'color:blue');
-      console.log(type, name);
-
-      $http.get('https://api.github.com/'+type+'/'+name+'/repos').then(function ( response )
-      {
-        console.log(response);
-        // success
-        if (response.status == 200) {
-          $scope.repos = response.data;
-        } else {
-          console.error(response);
-        }
-      });
-    }
-
-  }
-]);
-
-
-angular.module("angular-table-example").controller("filteredTableCtrl", [
-  "$scope", "$filter", function ( $scope, $filter )
+  $scope.fetchRepos = function ( type, name )
   {
 
-    $scope.list = $scope.$parent.personList;
-
-    $scope.filteredList = $scope.list;
-
-    $scope.del = function ( i )
+    $http.get('https://api.github.com/'+type+'/'+name+'/repos').then(function ( response )
     {
-      console.log("index: " + i);
-      $scope.list.splice(i, 1);
-      $scope.updateFilteredList();
-    }
-
-    $scope.updateFilteredList = function ()
-    {
-      $scope.filteredList = $filter("filter")($scope.list, $scope.query);
-    };
-
+      // success
+      if (response.status == 200) {
+        $scope.repos = response.data;
+      } else {
+        console.error(response);
+      }
+    });
   }
-])
 
-angular.module('formExample', [])
-  .controller('ExampleController', ['$scope', function($scope) {
-    $scope.master = {};
-
-    $scope.update = function(user) {
-      $scope.master = angular.copy(user);
-    };
-
-    $scope.reset = function() {
-      $scope.user = angular.copy($scope.master);
-    };
-
-    $scope.reset();
-  }]);
+  $scope.sort = function(keyname){
+    $scope.sortKey = keyname;   //set the sortKey to the param passed
+    $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+  }
+}]);
 
