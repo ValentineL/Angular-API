@@ -4,7 +4,7 @@ describe('ApiCall', function() {
     beforeEach(module('angularTable'));
 
     beforeEach(inject(function($rootScope, $httpBackend, $controller) {
-        httpBackend = $httpBackend;
+        httpBackend = _$httpBackend_;
         scope = $rootScope.$new();
 
         createController = function() {
